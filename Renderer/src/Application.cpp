@@ -13,7 +13,7 @@ int main()
 		glfwTerminate();
 	}
 
-	m_window = new Window(800, 800);
+	m_window = new Window(1920, 1080);
 
 
 	if (glewInit() != GLEW_OK)

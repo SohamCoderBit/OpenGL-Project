@@ -17,6 +17,7 @@ public:
 
 	Renderer();
 	void Draw();
+	void CameraInit();
 	~Renderer();
 
 private:
