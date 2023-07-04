@@ -16,6 +16,8 @@ Window::Window(uint32_t height, uint32_t width):Height(height) , Width(width)
 
 
 	glfwMakeContextCurrent(m_Window);
+
+
 }
 
 Window::~Window()
@@ -28,20 +30,40 @@ void Window::Init()
 {
 	Renderer* m_Renderer = new Renderer();
 
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO();
+	(void)io;
+
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+	// Setup Platform/Renderer bindings
+	ImGui_ImplGlfw_InitForOpenGL(m_Window, true);
+	ImGui_ImplOpenGL3_Init();
+	// Setup Dear ImGui style
+	ImGui::StyleColorsDark();
+
 	glEnable(GL_DEPTH_TEST);
 
 	while (!glfwWindowShouldClose(m_Window))
 	{
+		
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		m_Renderer->CameraInit();
 		m_Renderer->Draw();
 
 		glfwSwapBuffers(m_Window);
 
 		glfwPollEvents();
+
+		
 	}
+
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
 
 	delete m_Renderer;
 }

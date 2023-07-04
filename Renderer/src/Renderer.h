@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <string>	
 
 #include "OpenGL.h"
 #include "IndexBuffer.h"
@@ -10,6 +11,9 @@
 #include "gtc/matrix_transform.hpp"
 #include "gtc/type_ptr.hpp"
 #include "Texture.h"
+#include "ImGui/imgui.h"
+#include "ImGui/imgui_impl_glfw.h"
+#include "ImGui/imgui_impl_opengl3.h"
 
 class Renderer
 {
