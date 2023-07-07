@@ -1,17 +1,22 @@
 workspace "Renderer" -- Name of sln file
     configurations { "Debug", "Release" }
+    architecture "x86_64"
+    objdir "Renderer/x64/{cfg.longname}"
+    targetdir ""
 
-project "OpenGLRenderer" -- Name of project
+project "Renderer" -- Name of project
 
     kind "ConsoleApp" -- Uses the console
     language "C++"
     location "Renderer" -- location of vcxproj file
-    targetdir "RendererBuild" -- .exe files is in bin/(debug or release)/(x86 or x64)/
+     -- .exe files is in bin/(debug or release)/(x86 or x64)/
     --location of source files to include. Here we include All files ending with .h and .cpp
     --in the folder Minimal Example even files in subfolders.
 
     	files
 	{
+        "Renderer/ImGui/*.h",
+        "Renderer/ImGui/*.cpp",
 		"Renderer/src/**.h",
 		"Renderer/src/**.cpp"	
     }
