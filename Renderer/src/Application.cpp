@@ -1,30 +1,39 @@
 #include <iostream>
 
-#include "Window.h"
+#include "Renderer.h"
+#include "Application.h"
 
-int main()
+Application Application::s_Instance;
+
+Application::Application()
 {
-	Window* m_window = nullptr;
-		
-	glfwInit();
+	m_Window = CreateScope<Window>(WindowData());
+	m_Renderer = CreateScope<Renderer>();
+	m_ImGuiContext = CreateScope<ImGuiLayer>();
 
-	if (!glfwInit())
+	glViewport(0, 0, m_Window->m_WindowData.Width, m_Window->m_WindowData.Height);
+	glEnable(GL_DEPTH_TEST);
+
+	m_Renderer->Init();
+	m_ImGuiContext->Init();
+}
+
+void Application::Run()
+{
+
+	while (m_Running)
 	{
-		glfwTerminate();
+		m_ImGuiContext->BeginFrame();
+
+		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		m_Renderer->Draw();
+
+		m_ImGuiContext->EndFrame();
+
+		m_Window->onUpdate();
+
+		m_Running = !(m_Window->WindowShouldClose());
 	}
-
-	m_window = new Window(1920, 1080);
-
-
-	if (glewInit() != GLEW_OK)
-	{
-		std::cout << "GLEW LOAD ERROR" << std::endl;
-	}
-
-	m_window->Init();
-
-	delete m_window;
-
-	glfwTerminate();
-
 }

@@ -4,5 +4,7 @@
 **.vcxproj.filters
 **.vcxproj.user
 
-RendererBuild
+OpenGLRenderer.exe
+OpenGLRenderer.pdb
+imgui.ini
 Renderer/x64

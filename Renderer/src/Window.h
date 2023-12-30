@@ -2,19 +2,40 @@
 #include <iostream>
 
 #include "OpenGL.h"
-#include "Renderer.h"
+
+
+struct WindowData
+{
+	std::string Title;
+	uint32_t Height, Width;
+	WindowData(const std::string& title = "OpenGl Renderer", uint32_t height = 1080, uint32_t width = 1920) : Title(title), Height(height), Width(width) {}
+};
+
 
 class Window
 {
 public:
-	uint32_t Height = 0, Width = 0;
-	Window(uint32_t height , uint32_t width);
+	Window();
+	Window(const WindowData& windowData);
 	~Window();
-	void Init();
 	void ShutDown();
+	void onUpdate();
+	void* GetOpenGLWindow() { return m_Window; }
+	int WindowShouldClose() 
+	{
+		if (m_Window != nullptr)
+		{
+			return glfwWindowShouldClose(m_Window);
+		}
+		return 0;
+	}
+public :
+	WindowData m_WindowData;
+	
 private:
 	Window(const Window&);
 	Window& operator=(const Window&);
+	void Init(const WindowData& windowData);
 
 private:
 	GLFWwindow* m_Window;
